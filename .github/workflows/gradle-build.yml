@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: petclinic
+    runs-on: self-hosted
     strategy:
       matrix:
         java: [ '25' ]
