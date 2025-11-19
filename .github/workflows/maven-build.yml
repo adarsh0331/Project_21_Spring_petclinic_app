@@ -27,6 +27,6 @@ jobs:
         run: chmod +x mvnw
 
       - name: Build with Maven Wrapper (skip postgres tests)
-        run: |
-          ./mvnw -B verify \
-            -DskipITs=true
+        run: ./mvnw -B verify \
+              -Dspring.docker.compose.skip.in-tests=true \
+              "-Dtest=!PostgresIntegrationTests"
