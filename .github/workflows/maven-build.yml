@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
@@ -29,5 +29,4 @@ jobs:
       - name: Build with Maven Wrapper (skip postgres tests)
         run: |
           ./mvnw -B verify \
-            -DskipITs=true \
-            -Dspring.docker.compose.skip=true
+            -DskipITs=true
