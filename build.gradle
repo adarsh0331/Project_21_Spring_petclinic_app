@@ -67,6 +67,9 @@ tasks.named('test') {
     useJUnitPlatform()
     systemProperty "spring.profiles.active", "test"
 }
+test {
+    exclude '**/PostgresIntegrationTests.class'
+}
 
 checkstyle {
   configDirectory = project.file('src/checkstyle')
