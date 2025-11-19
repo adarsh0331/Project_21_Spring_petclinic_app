@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{matrix.java}}
-          distribution: 'adopt'
+          distribution: 'temurin'
           cache: maven
 
       - name: Give execute permission to mvnw
