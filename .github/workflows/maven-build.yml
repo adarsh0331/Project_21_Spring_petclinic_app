@@ -11,25 +11,23 @@ on:
 
 jobs:
   build:
-
     runs-on: self-hosted
-    strategy:
-      matrix:
-        java: [ '25' ]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK ${{matrix.java}}
+
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: ${{matrix.java}}
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
-      - name: Give execute permission to mvnw
+      - name: Make mvnw executable
         run: chmod +x mvnw
-        
-      - name: Build with Maven Wrapper
-        run: ./mvnw -B verify \
-              -Dtest=\!PostgresIntegrationTests \
-              -Dspring.docker.compose.skip.in-tests=true
+
+      - name: Build with Maven Wrapper (skip postgres tests)
+        run: |
+          ./mvnw -B verify \
+            -DskipITs=true \
+            -Dspring.docker.compose.skip=true
