@@ -23,8 +23,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{matrix.java}}
-          distribution: 'adopt'
-          cache: maven
+          distribution: 'temurin'   # Correct for Java 25
+          cache: gradle             # Correct cache for Gradle builds
+          
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
