@@ -19,27 +19,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create KIND Cluster on EC2
+      - name: Install KIND (no auto-create, no auto-delete)
         uses: helm/kind-action@v1
         with:
-          cluster_name: petclinic-cluster
-          remove_kind_cluster: false 
-          version: v0.26.0
+          install_only: true
+
+      - name: Create KIND cluster manually (this stays!)
+        run: |
+          kind create cluster --name petclinic-cluster
 
       - name: Verify cluster
         run: |
-          kubectl cluster-info
+          kind get clusters
           kubectl get nodes
 
-      - name: Deploy Applications
+      - name: Deploy applications
         run: |
           kubectl apply -f k8s/
 
-      - name: Wait for all pods to be ready
+      - name: Wait for pods
         run: |
           kubectl wait --for=condition=ready pod -l app=demo-db --timeout=180s || true
           kubectl wait --for=condition=ready pod -l app=petclinic --timeout=180s || true
 
-      - name: Get pod status (debug)
-        run: |
-          kubectl get pods -A
+      - name: Debug pods
+        run: kubectl get pods -A
